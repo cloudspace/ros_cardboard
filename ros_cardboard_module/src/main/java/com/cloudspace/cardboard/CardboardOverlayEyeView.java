@@ -13,20 +13,19 @@ import android.widget.TextView;
 import org.ros.android.BitmapFromCompressedImage;
 import org.ros.android.view.RosImageView;
 
-import sensor_msgs.CompressedImage;
-
 public class CardboardOverlayEyeView extends ViewGroup {
-        private final RosImageView<CompressedImage> imageView;
+        private final RosImageView imageView;
         private final TextView textView;
         private float offset;
 
-        public CardboardOverlayEyeView(Context context, AttributeSet attrs) {
+        public CardboardOverlayEyeView(Context context, AttributeSet attrs,
+                                       String topicName, String messageType) {
             super(context, attrs);
-            imageView = new RosImageView<CompressedImage>(context, attrs);
+            imageView = new RosImageView(context, attrs);
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             imageView.setAdjustViewBounds(true);  // Preserve aspect ratio.
-            imageView.setTopicName("/camera/image/compressed");
-            imageView.setMessageType(CompressedImage._TYPE);
+            imageView.setTopicName(topicName);
+            imageView.setMessageType(messageType);
             imageView.setMessageToBitmapCallable(new BitmapFromCompressedImage());
             addView(imageView);
 
@@ -89,7 +88,7 @@ public class CardboardOverlayEyeView extends ViewGroup {
                     (int) (leftMargin + width), (int) (topMargin + height * (1.0f - verticalTextPos)));
         }
 
-    public RosImageView<CompressedImage> getImageView() {
+    public RosImageView getImageView() {
         return imageView;
     }
 }

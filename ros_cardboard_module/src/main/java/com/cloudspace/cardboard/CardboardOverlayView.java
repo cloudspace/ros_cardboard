@@ -29,8 +29,9 @@ import org.ros.android.view.RosImageView;
  */
 public class CardboardOverlayView extends LinearLayout {
     private static final String TAG = "CardboardOverlayView";
-    private final CardboardOverlayEyeView mLeftView;
-    private final CardboardOverlayEyeView mRightView;
+    private CardboardOverlayEyeView mLeftView;
+    private CardboardOverlayEyeView mRightView;
+    AttributeSet attrs;
 
     public enum Side {
         LEFT(0), RIGHT(1);
@@ -43,22 +44,22 @@ public class CardboardOverlayView extends LinearLayout {
     }
 
     public RosImageView getRosImageView(Side side) {
+        if (mRightView == null || mLeftView == null) {
+            throw new IllegalStateException("Remember to call CardboardOverlayView.setTopicInformation(String topicName, String messageType)");
+        }
         return side == Side.RIGHT ? mRightView.getImageView() : mLeftView.getImageView();
     }
 
-    public CardboardOverlayView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setOrientation(HORIZONTAL);
-
+    public void setTopicInformation(String topicName, String messageType) {
         LayoutParams params = new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f);
         params.setMargins(0, 0, 0, 0);
 
-        mLeftView = new CardboardOverlayEyeView(context, attrs);
+        mLeftView = new CardboardOverlayEyeView(getContext(), attrs, topicName, messageType);
         mLeftView.setLayoutParams(params);
         addView(mLeftView);
 
-        mRightView = new CardboardOverlayEyeView(context, attrs);
+        mRightView = new CardboardOverlayEyeView(getContext(), attrs, topicName, messageType);
         mRightView.setLayoutParams(params);
         addView(mRightView);
 
@@ -66,6 +67,12 @@ public class CardboardOverlayView extends LinearLayout {
         setDepthOffset(0.016f);
         setColor(Color.rgb(150, 255, 180));
         setVisibility(View.VISIBLE);
+    }
+
+    public CardboardOverlayView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        this.attrs = attrs;
+        setOrientation(HORIZONTAL);
     }
 
     private void setDepthOffset(float offset) {

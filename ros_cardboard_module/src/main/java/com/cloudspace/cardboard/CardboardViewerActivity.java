@@ -34,6 +34,8 @@ import java.net.URI;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
+import sensor_msgs.CompressedImage;
+
 /**
  * A Cardboard sample application.
  */
@@ -72,6 +74,7 @@ public class CardboardViewerActivity extends RosCardboardActivity implements Car
         setCardboardView(cardboardView);
 
         mOverlayView = (CardboardOverlayView) findViewById(R.id.overlay);
+        mOverlayView.setTopicInformation("/camera/image/compressed", CompressedImage._TYPE);
     }
 
     @Override
