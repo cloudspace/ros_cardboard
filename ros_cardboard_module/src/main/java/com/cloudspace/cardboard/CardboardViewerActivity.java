@@ -29,7 +29,6 @@ import org.ros.android.view.RosImageView;
 import org.ros.namespace.GraphName;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
-
 import java.net.URI;
 
 import javax.microedition.khronos.egl.EGLConfig;
