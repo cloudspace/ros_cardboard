@@ -126,8 +126,10 @@ public abstract class RosCardboardActivity extends CardboardActivity {
 
     @Override
     protected void onDestroy() {
-        unbindService(cardboardNodeMainExecutorServiceConnection);
         super.onDestroy();
+        Intent intent = new Intent(this, NodeMainExecutorService.class);
+        intent.setAction("org.ros.android.ACTION_START_NODE_RUNNER_SERVICE");
+        stopService(intent);
     }
 
     protected void init() {
