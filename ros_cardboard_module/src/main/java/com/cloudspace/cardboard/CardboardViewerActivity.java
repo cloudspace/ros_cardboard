@@ -46,7 +46,7 @@ public class CardboardViewerActivity extends RosCardboardActivity implements Car
     private RosImageView rightRosImageView, leftRosImageView;
 
     public CardboardViewerActivity() {
-        super("Cardboard", "Cardboard", URI.create("http://192.168.0.41:11311"));
+        super("Ardrobot is running.", "Ardrobot", URI.create("http://10.100.4.65:11311"));
 //        super("Cardboard", "Cardboard");
     }
 
